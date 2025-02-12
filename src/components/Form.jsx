@@ -28,6 +28,7 @@ function Form() {
           name="carNumber"
           value={formData.carNumber}
           onChange={handleChange}
+          placeholder="123가4567"
           required
         />
       </div>
@@ -39,6 +40,7 @@ function Form() {
           name="ownerName"
           value={formData.ownerName}
           onChange={handleChange}
+          placeholder="홍길동"
           required
         />
       </div>
@@ -50,6 +52,7 @@ function Form() {
           name="contact"
           value={formData.contact}
           onChange={handleChange}
+          placeholder="01012345678"
           required
         />
       </div>
