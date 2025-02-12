@@ -8,15 +8,37 @@ function Form() {
     contact: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("제출된 데이터:", formData);
-    alert("신청이 완료되었습니다!");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/send-sms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        alert("SMS 전송 완료!");
+        setFormData({ carNumber: "", ownerName: "", contact: "" });
+      } else {
+        alert("SMS 전송 실패: " + result.message);
+      }
+    } catch (error) {
+      alert("오류 발생!");
+      console.error(error);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -57,7 +79,9 @@ function Form() {
         />
       </div>
 
-      <button type="submit">제출하기</button>
+      <button type="submit" disabled={loading}>
+        {loading ? "전송 중..." : "제출하기"}
+      </button>
     </form>
   );
 }
