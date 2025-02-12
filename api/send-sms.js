@@ -1,7 +1,7 @@
-const coolsms = require("coolsms-node-sdk").default;
+import coolsms from "coolsms-node-sdk";
 
 // 환경 변수에서 API Key & Secret 가져오기
-const messageService = new coolsms(
+const messageService = new coolsms.default(
   process.env.COOLSMS_API_KEY,
   process.env.COOLSMS_API_SECRET
 );
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   try {
     // CoolSMS API 호출하여 SMS 전송
     const response = await messageService.sendOne({
-      to: contact, // 수신자 번호
+      to: "01022269964", // 수신자 번호
       from: process.env.COOLSMS_SENDER_PHONE, // 발신번호 (CoolSMS에서 등록한 번호)
       text: `🚜 경기종합중기 소개 신청 🚜\n- 차량번호: ${carNumber}\n- 소유자명: ${ownerName}\n- 연락처: ${contact}`,
     });
